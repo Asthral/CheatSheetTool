@@ -62,35 +62,49 @@ Crypto_tool = ["hashcat", "john"]
 tool = [Forensic_tool, Crypto_tool]
 #=========================LIST=========================#
 
-print(f"\n{Main_payload}")
-
 # initialisation input
 inp_categorie = 1
 
 while 0 <= inp_categorie < len(categorie):
+    print(f"\n{Main_payload}")
     print(f'\nEnter a number between 0-9 :\n')
     print(*categorie, sep="\n")
 
+    print("categorie")
     inp_categorie = int(input("> "))
+
     print(payload[inp_categorie])
     inp_choice = 1
+
     if inp_categorie == 0:
         exit()
-    while 0 < inp_choice < len(choice):
-        #data = inp_categorie[1]
 
+    while 0 < inp_choice < len(choice):
         print('\nWhat do you want ?\n')
         print(*choice, sep="\n")
 
+        #data = inp_categorie[1]
+        print("choice")
         inp_choice = int(input("> "))
         print(choice[inp_choice])
 
         if inp_choice == 0:
             break
         inp_tool = 1
+        if inp_choice == 1:
+            selected_tools = tool[inp_categorie - 1]
+            for idx, t in enumerate(selected_tools, start=1):
+                print(f"[{idx}] {t}")
+
         while 0 <= inp_tool < len(tool):
-            print("Forensic Tools:", *tool[inp_categorie], sep="\n")
+            print("Tools:", *tool[inp_categorie], sep="\n")
             inp_tool = int(input("> "))
+
+            if inp_tool == 0:
+                break
+            if 1 <= inp_tool <= len(selected_tools):
+                selected_tool = selected_tools[inp_tool - 1]
+                os.system(selected_tool)
 
 
 #parser = argparse.ArgumentParser()

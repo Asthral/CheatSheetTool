@@ -42,24 +42,26 @@ payload = [Exit_paylaod,
            Web_paylaod, 
            Other_paylaod]
 
-categorie = ["[1] Crypto",
-        "[2] Forensic",
-        "[3] Network",
-        "[4] Osint",
-        "[5] Pwn",
-        "[6] Reverse",
-        "[7] Stegano",
-        "[8] Web",
-        "[9] Other",
-        "[0] Exit"]
+categorie = ["Exit",
+        "Crypto",
+        "Forensic",
+        "Network",
+        "Osint",
+        "Pwn",
+        "Reverse",
+        "Stegano",
+        "Web",
+        "Other"]
 
 choice = ["[1] Tools",
         "[2] Lists",
         "[0] Back"]
 
-Forensic_tool = ["autopsy", "binwalk"]
-Crypto_tool = ["hashcat", "john"]
-tool = [Forensic_tool, Crypto_tool]
+Crypto = ["Back", "hashcat", "john"]
+Forensic = ["Back", "autopsy", "binwalk"]
+Network = ["Back", "wireshark", "tshark"]
+
+Tools = [Crypto, Forensic, Network]
 #=========================LIST=========================#
 
 # initialisation input
@@ -68,43 +70,53 @@ inp_categorie = 1
 while 0 <= inp_categorie < len(categorie):
     print(f"\n{Main_payload}")
     print(f'\nEnter a number between 0-9 :\n')
-    print(*categorie, sep="\n")
+    for idx, cat in enumerate(categorie):
+        print(f"[{idx}] {cat}")
+    #print(*categorie, sep="\n")
 
-    print("categorie")
     inp_categorie = int(input("> "))
-
     print(payload[inp_categorie])
-    inp_choice = 1
-
+    
     if inp_categorie == 0:
         exit()
 
+    inp_choice = 1
     while 0 < inp_choice < len(choice):
         print('\nWhat do you want ?\n')
         print(*choice, sep="\n")
 
-        #data = inp_categorie[1]
-        print("choice")
         inp_choice = int(input("> "))
-        print(choice[inp_choice])
 
         if inp_choice == 0:
             break
-        inp_tool = 1
+
         if inp_choice == 1:
-            selected_tools = tool[inp_categorie - 1]
-            for idx, t in enumerate(selected_tools, start=1):
+            selected_tools = Tools[inp_categorie -1]
+            for idx, t in enumerate(selected_tools):
                 print(f"[{idx}] {t}")
 
-        while 0 <= inp_tool < len(tool):
-            print("Tools:", *tool[inp_categorie], sep="\n")
+        inp_tool = 1
+        while 0 <= inp_tool < len(Tools):
             inp_tool = int(input("> "))
 
             if inp_tool == 0:
                 break
-            if 1 <= inp_tool <= len(selected_tools):
-                selected_tool = selected_tools[inp_tool - 1]
+
+            if 0 < inp_tool <= len(selected_tools):
+                selected_tool = selected_tools[inp_tool]
                 os.system(selected_tool)
+                inp_use = str(input(f"{selected_tool} > "))
+
+
+
+
+
+
+
+
+
+
+
 
 
 #parser = argparse.ArgumentParser()

@@ -53,64 +53,83 @@ categorie = ["Exit",
         "Web",
         "Other"]
 
-choice = ["[1] Tools",
-        "[2] Lists",
-        "[0] Back"]
+choice = ["Back",
+        "Tools",
+        "Install"]
+
+blackbird = ["blackbird", "git clone https://github.com/p1ngul1n0/blackbird.git && cd blackbird && pipx -r requirements.txt"]
+
 
 Crypto = ["Back", "hashcat", "john"]
 Forensic = ["Back", "autopsy", "binwalk"]
 Network = ["Back", "wireshark", "tshark"]
+Osint = ["Back", blackbird]
+Pwn = ["Back"]
+Reverse = ["Back", "r2"]
+Stegano = ["Back"]
+Web = ["Back", "burpsuite"]
+Other = ["Back"]
 
-Tools = [Crypto, Forensic, Network]
+Tools = [Crypto, Forensic, Network, Osint, Pwn, Reverse, Stegano, Web, Other]
 #=========================LIST=========================#
+
+def input_user(inp_fonction):
+    while True:
+        try: inp_fonction = int(input("> "))
+        except ValueError:
+            print(f"{str(inp_fonction)} is not a valid input")
+            continue
+        if 0 <= inp_fonction <= 9: break
+        else: print("ok") 
 
 # initialisation input
 inp_categorie = 1
 
 while 0 <= inp_categorie < len(categorie):
-    print(f"\n{Main_payload}")
-    print(f'\nEnter a number between 0-9 :\n')
+    #===========PRINT + INPUT===========#
+    print(f"\n{Main_payload}\nEnter a number between 0-9 :\n")
     for idx, cat in enumerate(categorie):
         print(f"[{idx}] {cat}")
-    #print(*categorie, sep="\n")
-
-    inp_categorie = int(input("> "))
+    input_user(inp_categorie)
     print(payload[inp_categorie])
-    
+    #===========PRINT + INPUT===========#
     if inp_categorie == 0:
         exit()
 
     inp_choice = 1
     while 0 < inp_choice < len(choice):
+        #===========PRINT + INPUT===========#
         print('\nWhat do you want ?\n')
-        print(*choice, sep="\n")
-
-        inp_choice = int(input("> "))
-
+        for idx, ch in enumerate(choice):
+            print(f"[{idx}] {ch}")
+        input_user(inp_choice)
+        #===========PRINT + INPUT===========#
         if inp_choice == 0:
             break
 
-        if inp_choice == 1:
-            selected_tools = Tools[inp_categorie -1]
-            for idx, t in enumerate(selected_tools):
+        if inp_choice == 1 or inp_choice == 2:
+            selected_categorie = Tools[inp_categorie -1]
+            for idx, t in enumerate(selected_categorie):
                 print(f"[{idx}] {t}")
 
         inp_tool = 1
         while 0 <= inp_tool < len(Tools):
-            inp_tool = int(input("> "))
+            input_user(inp_tool)
 
             if inp_tool == 0:
                 break
 
-            if 0 < inp_tool <= len(selected_tools):
-                selected_tool = selected_tools[inp_tool]
-                os.system(selected_tool)
-                inp_use = str(input(f"{selected_tool} > "))
+            if 0 < inp_tool <= len(selected_categorie):
+                selected_tool = selected_categorie[inp_tool]
+                tool_help = selected_tool + " --help"
+                os.system(tool_help)
+                inp_use = str(input(f"[0] Back\n> {selected_tool}"))
+                if inp_use == 0:
+                    break
+                os.system(selected_tool + inp_use)
 
-
-
-
-
+# inp = input choice
+# selected = the input choice
 
 
 

@@ -3,7 +3,8 @@ import socket
 import re
 import argparse
 import time
-import os 
+import os
+import readline
 
 #==============PAYLOAD==============#
 Main_base64 = "X19fX18vXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXy9cXFxcXFxfX19fICAgICAgICAKIF9fXy9cXFxcXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX1wvLy8vXFxcX19fXyAgICAgICAKICBfXy9cXFwvLy8vLy8vLy9cXFxfX19fX19fX19fX19fX19fX18vXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19cL1xcXF9fX18gICAgICAKICAgX1wvXFxcX19fX19fX1wvXFxcX18vXFxcXFxcXFxcXF9fL1xcXFxcXFxcXFxcX18vXFwvXFxcXFxcXF9fXy9cXFxcXFxcXFxfX19fX19fXC9cXFxfX19fICAgICAKICAgIF9cL1xcXFxcXFxcXFxcXFxcXF9cL1xcXC8vLy8vL19fXC8vLy9cXFwvLy8vX19cL1xcXC8vLy8vXFxcX1wvLy8vLy8vL1xcXF9fX19fX1wvXFxcX19fXyAgICAKICAgICBfXC9cXFwvLy8vLy8vLy9cXFxfXC9cXFxcXFxcXFxcX19fX1wvXFxcX19fX19fXC9cXFxfX19cLy8vX19fXy9cXFxcXFxcXFxcX19fX19cL1xcXF9fX18gICAKICAgICAgX1wvXFxcX19fX19fX1wvXFxcX1wvLy8vLy8vL1xcXF9fX19cL1xcXF8vXFxfX1wvXFxcX19fX19fX19fXy9cXFwvLy8vL1xcXF9fX19fXC9cXFxfX19fICAKICAgICAgIF9cL1xcXF9fX19fX19cL1xcXF9fL1xcXFxcXFxcXFxfX19fXC8vXFxcXFxfX19cL1xcXF9fX19fX19fX1wvL1xcXFxcXFxcL1xcX18vXFxcXFxcXFxcXyAKICAgICAgICBfXC8vL19fX19fX19fXC8vL19fXC8vLy8vLy8vLy9fX19fX19cLy8vLy9fX19fXC8vL19fX19fX19fX19fXC8vLy8vLy8vXC8vX19cLy8vLy8vLy8vX18="
@@ -55,20 +56,30 @@ categorie = ["Exit",
 
 choice = ["Back",
         "Tools",
-        "Install"]
+        "Install",
+        "Link",
+        "Search"]
 
-blackbird = ["blackbird", "git clone https://github.com/p1ngul1n0/blackbird.git && cd blackbird && pipx -r requirements.txt"]
+blackbird = ["blackbird", "git clone https://github.com/p1ngul1n0/blackbird.git && cd blackbird && pipx -r requirements.txt && sudo ln -sfv /home/kali/blacklird/blackbird.py /usr/bin/blackbird"]
+haiti = ["haiti", "sudo gem install haiti"]
+john = ["john", "sudo apt install john"]
+hashcat = ["hashcat", "sudo apt install hashcat"]
+zip2john = ["zip2john", "sudo apt install john"]
+
+wireshark = ["wireshark", "sudo apt install wireshark"]
+
+jwt_tool = ["jwt_tool", "git clone https://github.com/ticarpi/jwt_tool.git && cd jwt_tool && pipx -r requirements.txt && sudo ln -sfv /home/kali/jwt_tool/jwt_tool.py /usr/bin/jwt_tool"]
 
 
-Crypto = ["Back", "hashcat", "john"]
-Forensic = ["Back", "autopsy", "binwalk", "volatility2", "volatility3", "volshell"]
-Network = ["Back", "wireshark", "tshark", "hydra", "scapy", "ettercap", "radsniff", "USB-mouse-pcap-visualizer"]
+Crypto = ["Back", hashcat, john, haiti, zip2john]
+Forensic = ["Back", "autopsy", "binwalk", "volatility2", "volatility3", "volshell", "crit", "photorec"]
+Network = ["Back", "wireshark", "tshark", "hydra", "scapy", "ettercap", "radsniff", "USB-mouse-pcap-visualizer", "impacket"]
 Osint = ["Back", blackbird]
 Pwn = ["Back"]
-Reverse = ["Back", "r2"]
-Stegano = ["Back", "steghide", "stegseek", "zsteg", "pngcheck"]
-Web = ["Back", "burpsuite", "dirb", "curl", "wget", "sqlmap", "graphqlmap", "sstimap", "xsstrick", "jwt_tool" "flask_unsign", "ipsourcebypass"]
-Other = ["Back"]
+Reverse = ["Back", "r2", "gdb", "binaryninja", "hydra"]
+Stegano = ["Back", "steghide", "stegseek", "stegolsb", "zsteg", "pngcheck", "tweakPNG"]
+Web = ["Back", "burpsuite", "dirb", "sqlmap", "graphqlmap", "sstimap", "xsstrick", "jwt_tool" "flask_unsign", "ipsourcebypass"]
+Other = ["Back", "Schemas", "Wordlists", "Recovery", "Nessus", "Sublist3r"]
 
 Tools = [Crypto, Forensic, Network, Osint, Pwn, Reverse, Stegano, Web, Other]
 #=========================LIST=========================#
@@ -106,29 +117,30 @@ while 0 <= inp_categorie < len(categorie):
         inp_choice = input_user(inp_choice, 0, len(choice))
         print(f"inp_choice : {inp_choice}")
         #===========PRINT + INPUT===========#
+        selected_categorie = Tools[inp_categorie -1]
 
         if inp_choice == 0:
             break
-
-        selected_categorie = Tools[inp_categorie -1]
-        for idx, t in enumerate(selected_categorie):
-            print(f"[{idx}] {t}")
-
-        if inp_choice == 1: 
-            print("Mode tool use :")
+        if inp_choice == 1:
+            print("Mode tool use :\n")
         if inp_choice == 2:
-            print("Mode install")
+            print("Mode install :\n")
+        if inp_choice == 3:
+            print("Mode search :\n")
 
 
         inp_tool = 0
         while 0 <= inp_tool < len(selected_categorie):
-            print('\nWhat tool do you want to use ?\n')
+            #===========PRINT + INPUT===========#
+            print('What tool do you want to use ?\n')
+            for idx, t in enumerate(selected_categorie):
+                print(f"[{idx}] {t}")
             inp_tool = input_user(inp_tool, 0, len(selected_categorie))
             print(f" inp_tool : {inp_tool} {type(inp_tool)}")
+            #===========PRINT + INPUT===========#
 
             if inp_tool == 0:
                 break
-
             if 0 < inp_tool <= len(selected_categorie):
                 selected_tool = selected_categorie[inp_tool][inp_choice -1]
                 os.system(selected_tool)

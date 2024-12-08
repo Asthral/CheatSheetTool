@@ -91,7 +91,7 @@ while 0 <= inp_categorie < len(categorie):
     for idx, cat in enumerate(categorie):
         print(f"[{idx}] {cat}")
     inp_categorie = input_user(inp_categorie, 0, len(categorie))
-    #print(f" inp_categorie : {inp_categorie}")
+    print(f" inp_categorie : {inp_categorie}")
     #===========PRINT + INPUT===========#
     if inp_categorie == 0:
         print(Exit_paylaod)
@@ -104,7 +104,7 @@ while 0 <= inp_categorie < len(categorie):
         for idx, ch in enumerate(choice):
             print(f"[{idx}] {ch}")
         inp_choice = input_user(inp_choice, 0, len(choice))
-        #print(f"inp_choice : {inp_choice}")
+        print(f"inp_choice : {inp_choice}")
         #===========PRINT + INPUT===========#
 
         if inp_choice == 0:
@@ -124,16 +124,16 @@ while 0 <= inp_categorie < len(categorie):
         while 0 <= inp_tool < len(selected_categorie):
             print('\nWhat tool do you want to use ?\n')
             inp_tool = input_user(inp_tool, 0, len(selected_categorie))
-            #print(f" inp_tool : {inp_tool} {type(inp_tool)}")
+            print(f" inp_tool : {inp_tool} {type(inp_tool)}")
 
             if inp_tool == 0:
                 break
 
             if 0 < inp_tool <= len(selected_categorie):
-                selected_tool = selected_categorie[inp_tool]
+                selected_tool = selected_categorie[inp_tool][inp_choice -1]
                 os.system(selected_tool)
                 inp_use = input("> ")
-                #print(f" inp_use : {inp_use}")
+                print(f" inp_use : {inp_use}")
                 if inp_use == "0":
                     break
                 os.system(inp_use)

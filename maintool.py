@@ -67,19 +67,34 @@ hashcat = ["hashcat", "sudo apt install hashcat"]
 zip2john = ["zip2john", "sudo apt install john"]
 
 wireshark = ["wireshark", "sudo apt install wireshark"]
+tshark = ["tshark", "sudo apt install tshark"]
+hydra = ["hydra", "sudo apt install hydra"]
+scapy = ["scapy", "sudo apt install scapy"]
 
-jwt_tool = ["jwt_tool", "git clone https://github.com/ticarpi/jwt_tool.git && cd jwt_tool && pipx -r requirements.txt && sudo ln -sfv /home/kali/jwt_tool/jwt_tool.py /usr/bin/jwt_tool"]
+autopsy = ["autopsy"]
+binwalk = ["binwalk"]
+volatility2 = ["volatility2"]
+volatility3 = ["volatility3"]
 
+jwt_tool = ["jwt_tool", "git clone https://github.com/ticarpi/jwt_tool.git && cd jwt_tool && pipx -r requirements.txt && sudo ln -sfv /home/kali/jwt_tool/jwt_tool.py /usr/bin/jwt_tool", "caca"]
 
-Crypto = ["Back", hashcat, john, haiti, zip2john]
-Forensic = ["Back", "autopsy", "binwalk", "volatility2", "volatility3", "volshell", "crit", "photorec"]
-Network = ["Back", "wireshark", "tshark", "hydra", "scapy", "ettercap", "radsniff", "USB-mouse-pcap-visualizer", "impacket"]
-Osint = ["Back", blackbird]
-Pwn = ["Back"]
-Reverse = ["Back", "r2", "gdb", "binaryninja", "hydra"]
-Stegano = ["Back", "steghide", "stegseek", "stegolsb", "zsteg", "pngcheck", "tweakPNG"]
-Web = ["Back", "burpsuite", "dirb", "sqlmap", "graphqlmap", "sstimap", "xsstrick", "jwt_tool" "flask_unsign", "ipsourcebypass"]
-Other = ["Back", "Schemas", "Wordlists", "Recovery", "Nessus", "Sublist3r"]
+steghide = ["steghide"]
+stegseek = ["stegseek"]
+stegolsb = ["stegolsb"]
+zsteg = ["zsteg"]
+pngcheck = ["pngcheck"]
+tweakPNG = ["tweakPNG"]
+Back = ["Back"]
+
+Crypto = [Back, hashcat, john, haiti, zip2john]
+Forensic = [Back, autopsy, binwalk, volatility2, volatility3, "volshell", "crit", "photorec"]
+Network = [Back, wireshark, tshark, hydra, scapy, "ettercap", "radsniff", "USB-mouse-pcap-visualizer", "impacket"]
+Osint = [Back, blackbird]
+Pwn = [Back]
+Reverse = [Back, "r2", "gdb", "binaryninja", "hydra"]
+Stegano = [Back, steghide, stegseek, stegolsb, zsteg, pngcheck, tweakPNG]
+Web = [Back, "burpsuite", "dirb", "sqlmap", "graphqlmap", "sstimap", "xsstrick", jwt_tool, "flask_unsign", "ipsourcebypass"]
+Other = [Back, "Schemas", "Wordlists", "Recovery", "Nessus", "Sublist3r"]
 
 Tools = [Crypto, Forensic, Network, Osint, Pwn, Reverse, Stegano, Web, Other]
 #=========================LIST=========================#
@@ -92,15 +107,16 @@ def input_user(user_input, n1, n2):
         if n1 <= user_input < n2: return user_input
         else: print(f"Enter input valid (number {n1}-{n2 -1})") 
 
-
+def listing(here):
+    for idx, l in enumerate(here):
+        print(f"[{idx}] {l}")
 
 inp_categorie = 1
 
 while 0 <= inp_categorie < len(categorie):
     #===========PRINT + INPUT===========#
     print(f"\n{Main_payload}\n\nEnter a number between 0-{len(categorie) -1} :\n")
-    for idx, cat in enumerate(categorie):
-        print(f"[{idx}] {cat}")
+    listing(categorie)
     inp_categorie = input_user(inp_categorie, 0, len(categorie))
     print(f" inp_categorie : {inp_categorie}")
     #===========PRINT + INPUT===========#
@@ -112,8 +128,7 @@ while 0 <= inp_categorie < len(categorie):
     while 0 <= inp_choice < len(choice):
         #===========PRINT + INPUT===========#
         print(f"{payload[inp_categorie]}\nWhat do you want ?\n")
-        for idx, ch in enumerate(choice):
-            print(f"[{idx}] {ch}")
+        listing(choice)
         inp_choice = input_user(inp_choice, 0, len(choice))
         print(f"inp_choice : {inp_choice}")
         #===========PRINT + INPUT===========#
@@ -121,20 +136,21 @@ while 0 <= inp_categorie < len(categorie):
 
         if inp_choice == 0:
             break
-        if inp_choice == 1:
+        elif inp_choice == 1:
             print("Mode tool use :\n")
-        if inp_choice == 2:
+        elif inp_choice == 2:
             print("Mode install :\n")
-        if inp_choice == 3:
+        elif inp_choice == 3:
+            print("Mode link :\n")
+        elif inp_choice == 4:
             print("Mode search :\n")
-
 
         inp_tool = 0
         while 0 <= inp_tool < len(selected_categorie):
             #===========PRINT + INPUT===========#
             print('What tool do you want to use ?\n')
             for idx, t in enumerate(selected_categorie):
-                print(f"[{idx}] {t}")
+                print(f"[{idx}] {t[0]}")
             inp_tool = input_user(inp_tool, 0, len(selected_categorie))
             print(f" inp_tool : {inp_tool} {type(inp_tool)}")
             #===========PRINT + INPUT===========#
@@ -144,7 +160,7 @@ while 0 <= inp_categorie < len(categorie):
             if 0 < inp_tool <= len(selected_categorie):
                 selected_tool = selected_categorie[inp_tool][inp_choice -1]
                 os.system(selected_tool)
-                inp_use = input("> ")
+                inp_use = input("[0] Back\n> ")
                 print(f" inp_use : {inp_use}")
                 if inp_use == "0":
                     break

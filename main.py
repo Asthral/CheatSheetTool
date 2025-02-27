@@ -38,6 +38,8 @@ Exit_paylaod = base64.b64decode(Exit_base64).decode()
         
 # =================== FUNCTION =================== #
 def path(file):
+    global repo_path
+    repo_path = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(repo_path, file)
 
 def data(tool):
@@ -51,6 +53,7 @@ def data(tool):
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")
             tool_path = path(Config.get(section, "path"))
+            tool_exec = path(Config.get(section, "exec"))
             return
 # =================== FUNCTION =================== #
 
@@ -67,7 +70,6 @@ args = parser.parse_args()
 # =================== ARGS CONF =================== #
 
 # =================== DATA CONF =================== #
-repo_path = os.path.dirname(os.path.abspath(__file__))
 config_file = path("lists.ini")
 Config = configparser.ConfigParser()
 Config.read(config_file)
@@ -116,19 +118,18 @@ if args.use:
     data(args.use)
 
     if tool_found:
-        print(f"[+] Tool {tool_name} selectionné")
         print(f"[+] Chemin du tool : {tool_path}")
+        print(f"[+] Tool {tool_name} selectionné")
         
         if os.path.exists(tool_path):
             print(f"[+] Exec de {tool_name}...")
             os.chdir(tool_path)
             #subprocess.run(["./" + tool_name], shell=True) c'est l'idée mais à modif
         else:
-            print(f"[-] Chemin {tool_path} introuvable")
+            print(f"[-] Chemin introuvable")
             install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
             if install.lower() in ["o", "y"]:
                 args.install = args.use
-
     else:
         print(f"[-] Tool {args.use} non trouvé")
 # ================ USE ================ #
@@ -147,7 +148,12 @@ if args.install:
                 print(f"[+] Installation de {tool_name}...")
                 print(f"[+] Execution de {tool_install}...")
                 subprocess.run(tool_install, shell=True)
-                print(f"[+] Fin de l'installation de {tool_name}")
+                replace = input(f"[-] Veux-tu remplacer {bin_path} ? (y/N) ")
+                if replace.lower() in ["o", "y"]:
+                    print(f"[+] Remplacement de {bin_path}...")
+                    replace_bin = f"sudo ln -sfv {tool_exec} /usr/bin/{tool_name}"
+                    subprocess.run(replace_bin, shell=True)
+                    print(f"[+] Fin de l'installation de {tool_name}")
             else:
                 print(f"[+] Annulation de l'installation de {tool_name}")
                 print(f"[+] Tool déjà existant à {bin_path}")
@@ -155,8 +161,8 @@ if args.install:
         else:
             print(f"[+] Installation de {tool_name}...")
             print(f"[+] Execution de {tool_install}...")
-            subprocess.run(tool_install, shell=True)
-
+            subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
+        
     else:
         print(f"[-] Tool {args.install} pas trouvé")
 # ================ INSTALL ================ #
@@ -167,7 +173,7 @@ if args.list:
     for section in sect:
         print(f"- {section}\n description : {Config.get(section, 'description')}")
                 #else:
-        #print(f"[-] j'ai pas encore finis de co D bande de noobz")
+        #print(f"[-] j'ai pas encore finis de co D bande de noobynoobz")
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #

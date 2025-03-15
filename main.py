@@ -7,6 +7,10 @@ import re
 import time
 import os
 import readline
+import platform
+import subprocess
+import sys
+
 
 #==============PAYLOAD==============#
 Main_base64 = "X19fX18vXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXy9cXFxcXFxfX19fICAgICAgICAKIF9fXy9cXFxcXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX1wvLy8vXFxcX19fXyAgICAgICAKICBfXy9cXFwvLy8vLy8vLy9cXFxfX19fX19fX19fX19fX19fX18vXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19cL1xcXF9fX18gICAgICAKICAgX1wvXFxcX19fX19fX1wvXFxcX18vXFxcXFxcXFxcXF9fL1xcXFxcXFxcXFxcX18vXFwvXFxcXFxcXF9fXy9cXFxcXFxcXFxfX19fX19fXC9cXFxfX19fICAgICAKICAgIF9cL1xcXFxcXFxcXFxcXFxcXF9cL1xcXC8vLy8vL19fXC8vLy9cXFwvLy8vX19cL1xcXC8vLy8vXFxcX1wvLy8vLy8vL1xcXF9fX19fX1wvXFxcX19fXyAgICAKICAgICBfXC9cXFwvLy8vLy8vLy9cXFxfXC9cXFxcXFxcXFxcX19fX1wvXFxcX19fX19fXC9cXFxfX19cLy8vX19fXy9cXFxcXFxcXFxcX19fX19cL1xcXF9fX18gICAKICAgICAgX1wvXFxcX19fX19fX1wvXFxcX1wvLy8vLy8vL1xcXF9fX19cL1xcXF8vXFxfX1wvXFxcX19fX19fX19fXy9cXFwvLy8vL1xcXF9fX19fXC9cXFxfX19fICAKICAgICAgIF9cL1xcXF9fX19fX19cL1xcXF9fL1xcXFxcXFxcXFxfX19fXC8vXFxcXFxfX19cL1xcXF9fX19fX19fX1wvL1xcXFxcXFxcL1xcX18vXFxcXFxcXFxcXyAKICAgICAgICBfXC8vL19fX19fX19fXC8vL19fXC8vLy8vLy8vLy9fX19fX19cLy8vLy9fX19fXC8vL19fX19fX19fX19fXC8vLy8vLy8vXC8vX19cLy8vLy8vLy8vX18="
@@ -37,13 +41,36 @@ Exit_paylaod = base64.b64decode(Exit_base64).decode()
 
         
 # =================== FUNCTION =================== #
+def detect_and_install(package):
+    system = platform.system()
+    
+    if system == "Linux":
+        try:
+            cmd = "sudo apt install -y" + package
+            subprocess.run(cmd, check=True)
+        except Exception as e:
+            print(f"[!] Erreur lors de l'installation : {e}")
+            sys.exit(1)
+    
+    elif system == "Windows":
+        print("[!] Ce programme ne supporte pas Windows. Fermeture.")
+        sys.exit(1)
+    
+    elif system == "Darwin":
+        print("[!] Ce programme ne supporte pas macOS. Fermeture.")
+        sys.exit(1)
+    
+    else:
+        print("Système d'exploitation non reconnu.")
+        sys.exit(1)
+
 def path(file):
     global repo_path
     repo_path = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(repo_path, file)
 
 def data(tool):
-    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path
+    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec
     tool_found = False
     for section in sect:
         if tool == section:
@@ -52,11 +79,20 @@ def data(tool):
             tool_name = Config.get(section, "name")
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")
-            tool_path = path(Config.get(section, "path"))
-            tool_exec = path(Config.get(section, "exec"))
+            exec_cmd = Config.get(section, "exec")
+            tool_path = Config.get(section, "path", fallback=None)
+            if tool_path:
+                tool_path = path(tool_path)
+                tool_exec = tool_path + exec_cmd
+            else:
+                tool_exec = exec_cmd
             return
 # =================== FUNCTION =================== #
 
+
+# ========= MAIN ========= #
+print(f"{Main_payload}\n")
+# ========= MAIN ========= #
 
 
 # =================== ARGS CONF =================== #
@@ -80,14 +116,12 @@ sect = Config.sections()
 tool_found = False
 # ================== INIT VARIABLE ================== #
 
-
-print(f"{Main_payload}\n")
 print(f"[+] Initialisation du path {repo_path}...")
 print(f"[+] Chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
 if not args.list and not args.install and not args.tag and not args.search and not args.use:
-    print(f"[+] Merci de bien vouloir utiliser une option")
-    print(""" 
+    print(f"[!] Merci de bien vouloir utiliser une option")
+    print("""
 usage: main.py [-h] [-s SEARCH] [-t TAG] [-i INSTALL] [-l LIST] [-u USE]
 
 optional arguments:
@@ -100,6 +134,12 @@ optional arguments:
   -l LIST, --list LIST  List all tools
   -u USE, --use USE     Use the selected tool
 """)
+
+
+# ================================================ OPTIONS ================================================ #
+# ================================================ OPTIONS ================================================ #
+# ================================================ OPTIONS ================================================ #
+
 
 # ================ SEARCH ================ #
 if args.search:
@@ -118,18 +158,24 @@ if args.use:
     data(args.use)
 
     if tool_found:
-        print(f"[+] Chemin du tool : {tool_path}")
-        print(f"[+] Tool {tool_name} selectionné")
-        
-        if os.path.exists(tool_path):
-            print(f"[+] Exec de {tool_name}...")
-            os.chdir(tool_path)
-            #subprocess.run(["./" + tool_name], shell=True) c'est l'idée mais à modif
+        if tool_path:
+            print(f"[+] Tool {tool_name} selectionné")
+            print(f"[+] Chemin du tool : {tool_path}")        
+            if os.path.exists(tool_path):
+                print(f"[+] Exec de {tool_name}...")
+                os.chdir(tool_path)
+                print(tool_exec)
+                subprocess.run(tool_exec, shell=True)
+            else:
+                print(f"[-] Chemin introuvable")
+                install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
+                if install.lower() in ["o", "y"]:
+                    args.install = args.use
         else:
-            print(f"[-] Chemin introuvable")
-            install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
-            if install.lower() in ["o", "y"]:
-                args.install = args.use
+            print(f"[+] Tool {tool_name} selectionné")
+            print(f"[+] Exec de {tool_name}...")
+            print(tool_exec)
+            subprocess.run(tool_exec, shell=True)
     else:
         print(f"[-] Tool {args.use} non trouvé")
 # ================ USE ================ #
@@ -185,3 +231,7 @@ if args.tag:
         else:
             print(f"[-] j'ai pas finis de codé bande de noobz")
 # ================ TAG FUNCTION ================ #
+
+# ================================================ OPTIONS ================================================ #
+# ================================================ OPTIONS ================================================ #
+# ================================================ OPTIONS ================================================ #

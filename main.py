@@ -83,7 +83,7 @@ def data(tool):
             tool_path = Config.get(section, "path", fallback=None)
             if tool_path:
                 tool_path = path(tool_path)
-                tool_exec = tool_path + exec_cmd
+                tool_exec = tool_path + '/' + exec_cmd
             else:
                 tool_exec = exec_cmd
             return
@@ -117,7 +117,11 @@ tool_found = False
 # ================== INIT VARIABLE ================== #
 
 print(f"[+] Initialisation du path {repo_path}...")
-print(f"[+] Chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
+if os.path.exists(f"{repo_path}/lists.ini"):
+    print(f"[+] Chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
+else:
+    print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
+
 
 if not args.list and not args.install and not args.tag and not args.search and not args.use:
     print(f"[!] Merci de bien vouloir utiliser une option")
@@ -218,8 +222,6 @@ if args.list:
     print(f"[+] Liste de {args.list} :")
     for section in sect:
         print(f"- {section}\n description : {Config.get(section, 'description')}")
-                #else:
-        #print(f"[-] j'ai pas encore finis de co D bande de noobynoobz")
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #
@@ -228,8 +230,6 @@ if args.tag:
     for section in sect:
         if (Config.get(section, 'tag')) == args.tag:
             print(f"- {section}\n description : {Config.get(section, 'description')}")
-        else:
-            print(f"[-] j'ai pas finis de codé bande de noobz")
 # ================ TAG FUNCTION ================ #
 
 # ================================================ OPTIONS ================================================ #

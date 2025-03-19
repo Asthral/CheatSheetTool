@@ -79,7 +79,7 @@ def data(tool):
             tool_name = Config.get(section, "name")
             tool_path = Config.get(section, "path", fallback=None)
             exec_cmd = Config.get(section, "exec")
-            tool_tag = Config.get(section, "tag")
+#            tool_tag = Config.get(section, "tag")
             tool_install = Config.get(section, "install")
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")
@@ -100,7 +100,7 @@ print(f"{Main_payload}\n")
 # =================== ARGS CONF =================== #
 parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--search', dest='search', default=None, help="Search tool by name")
-parser.add_argument('-t', '--tag', dest='tag', default=None, help="Search tool by tag")
+#parser.add_argument('-t', '--tag', dest='tag', default=None, help="Search tool by tag")
 parser.add_argument('-i', '--install', dest='install', default=None, help='Install the tool')
 parser.add_argument('-l', '--list', dest='list', default=None, help='List all tools')
 parser.add_argument('-u', '--use', dest='use', default=None, help='Use the selected tool')
@@ -133,7 +133,6 @@ optional arguments:
   -h, --help            show this help message and exit
   -s SEARCH, --search SEARCH
                         Search tool by name
-  -t TAG, --tag TAG     Search tool by tag
   -i INSTALL, --install INSTALL
                         Install the tool
   -l LIST, --list LIST  List all tools
@@ -231,11 +230,11 @@ if args.list:
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #
-if args.tag:
-    print("[+] Recherche tag des tools :")
-    for section in sect:
-        if (tool_tag) == args.tag:
-            print(f"[+] {section}\ndescription : {tool_description}")
+#if args.tag:
+#    print("[+] Recherche tag des tools :")
+#    for section in sect:
+#        if (tool_tag) == args.tag:
+#            print(f"[+] {section}\ndescription : {tool_description}")
 # ================ TAG FUNCTION ================ #
 
 # ================================================ OPTIONS ================================================ #

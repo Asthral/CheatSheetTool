@@ -70,17 +70,18 @@ def path(file):
     return os.path.join(repo_path, file)
 
 def data(tool):
-    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec
+    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, tool_tag
     tool_found = False
     for section in sect:
         if tool == section:
             tool_found = True
-            tool_install = Config.get(section, "install")
             tool_name = Config.get(section, "name")
+            tool_path = Config.get(section, "path", fallback=None)
+            exec_cmd = Config.get(section, "exec")
+            tool_tag = Config.get(section, "tag")
+            tool_install = Config.get(section, "install")
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")
-            exec_cmd = Config.get(section, "exec")
-            tool_path = Config.get(section, "path", fallback=None)
             if tool_path:
                 tool_path = path(tool_path)
                 tool_exec = tool_path + '/' + exec_cmd
@@ -122,7 +123,6 @@ if os.path.exists(f"{repo_path}/lists.ini"):
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
-
 if not args.list and not args.install and not args.tag and not args.search and not args.use:
     print(f"[!] Merci de bien vouloir utiliser une option")
     print("""
@@ -144,14 +144,13 @@ optional arguments:
 # ================================================ OPTIONS ================================================ #
 # ================================================ OPTIONS ================================================ #
 
-
 # ================ SEARCH ================ #
 if args.search:
     print(f"[+] Recherche de : {args.search}\n")
     tool_found = False
     for section in sect:
         if args.search.lower() in section.lower():
-            print(f"[+] {section}\n {Config.get(section, 'description')}")
+            print(f"[+] {section}\n {tool_description}")
             tool_found = True
     if not tool_found:
         print("[-] Aucun tool trouvé")
@@ -186,9 +185,8 @@ if args.use:
         tool_found = False
         for section in sect:
             if args.use.lower() in section.lower():
-                print(f"[+] {section}\n {Config.get(section, 'description')}")
+                print(f"[+] {section}\ndescription : {tool_description}")
                 tool_found = True
-            
 # ================ USE ================ #
 
 # ================ INSTALL ================ #
@@ -228,15 +226,15 @@ if args.install:
 if args.list:
     print(f"[+] Liste de {args.list} :")
     for section in sect:
-        print(f"- {section}\n description : {Config.get(section, 'description')}")
+        print(f"[+] {section}\ndescription : {tool_description}")
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #
 if args.tag:
     print("[+] Recherche tag des tools :")
     for section in sect:
-        if (Config.get(section, 'tag')) == args.tag:
-            print(f"- {section}\n description : {Config.get(section, 'description')}")
+        if (tool_tag) == args.tag:
+            print(f"[+] {section}\ndescription : {tool_description}")
 # ================ TAG FUNCTION ================ #
 
 # ================================================ OPTIONS ================================================ #

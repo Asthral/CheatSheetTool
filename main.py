@@ -41,6 +41,7 @@ Exit_paylaod = base64.b64decode(Exit_base64).decode()
 
         
 # =================== FUNCTION =================== #
+#fonction by chatgpt
 def detect_and_install(package):
     system = platform.system()
     

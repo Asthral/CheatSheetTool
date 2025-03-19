@@ -182,6 +182,13 @@ if args.use:
             subprocess.run(tool_exec, shell=True)
     else:
         print(f"[-] Tool {args.use} non trouvé")
+        print(f"[-] Suggestion :")
+        tool_found = False
+        for section in sect:
+            if args.use.lower() in section.lower():
+                print(f"[+] {section}\n {Config.get(section, 'description')}")
+                tool_found = True
+            
 # ================ USE ================ #
 
 # ================ INSTALL ================ #

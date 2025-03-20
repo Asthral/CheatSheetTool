@@ -104,6 +104,7 @@ parser.add_argument('-s', '--search', dest='search', default=None, help="Search 
 parser.add_argument('-i', '--install', dest='install', default=None, help='Install the tool')
 parser.add_argument('-l', '--list', dest='list', default=None, help='List all tools')
 parser.add_argument('-u', '--use', dest='use', default=None, help='Use the selected tool')
+parser.add_argument('uc', '--categorie', dest='categorie', default=None, help='Option used for list tool by categorie')
 args = parser.parse_args()
 # =================== ARGS CONF =================== #
 
@@ -124,7 +125,7 @@ if os.path.exists(f"{repo_path}/lists.ini"):
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
-if not args.list and not args.install and not args.tag and not args.search and not args.use:
+if not args.list and not args.install and not args.tag and not args.search and not args.use and not args.categorie:
     print(f"[!] Merci de bien vouloir utiliser une option")
     print("""
 usage: main.py [-h] [-s SEARCH] [-t TAG] [-i INSTALL] [-l LIST] [-u USE]
@@ -143,6 +144,19 @@ optional arguments:
 # ================================================ OPTIONS ================================================ #
 # ================================================ OPTIONS ================================================ #
 # ================================================ OPTIONS ================================================ #
+
+# ================ CATEGORIE ================ #
+if args.categorie:
+        print(f"[+] List de la categorie : {args.categorie}\n")
+        tool_found = False
+        for section in sect:
+                if args.categorie.lower() == tool_categorie:
+                        print(f"[+] {section}\n {tool_description}")
+                        tool_found = True
+        if not tool_found:
+                print("[-] Aucun tool trouvé")
+# ================ CATEGORIE ================ #
+
 
 # ================ SEARCH ================ #
 if args.search:

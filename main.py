@@ -149,12 +149,13 @@ optional arguments:
 # ================ PERSONNALIZE ================ #
 if args.personnalize:
         print(f"[+] personnalisation de {repo_path}/lists.ini")
-        for section in sect:
-                if args.personnalize.lower() == section.lower():
-                        print(f"edite du tool {args.personnalize}")
-                        #Config.set
-                else:
-                        print(f"creation du tool {args.personnalize}")
+        data(args.personnalize)
+        if tool_found:
+                print(f"edite du tool {args.personnalize}")
+                #Config.set
+        else:
+                print(f"creation du tool {args.personnalize}")
+                
                         
 # ================ PERSONNALIZE ================ #
 
@@ -261,7 +262,7 @@ if args.list:
 #if args.tag:
 #    print("[+] Recherche tag des tools :")
 #    for section in sect:
-#        if (tool_tag) == args.tag:
+#        if tool_tag == args.tag:
 #            print(f"[+] {section}\ndescription : {tool_description}")
 # ================ TAG FUNCTION ================ #
 

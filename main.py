@@ -231,7 +231,7 @@ if args.install:
             if install.lower() in ["o", "y"]:
                 print(f"[+] Installation de {tool_name}...")
                 print(f"[+] Execution de {tool_install}...")
-                subprocess.run(tool_install, shell=True)
+                subprocess.run("cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
                 replace = input(f"[-] Veux-tu remplacer {bin_path} ? (y/N) ")
                 if replace.lower() in ["o", "y"]:
                     print(f"[+] Remplacement de {bin_path}...")

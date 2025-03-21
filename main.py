@@ -126,7 +126,7 @@ if os.path.exists(f"{repo_path}/lists.ini"):
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
-if not args.list and not args.install and not args.tag and not args.search and not args.use and not args.categorie:
+if not args.list and not args.install and not args.tag and not args.search and not args.use and not args.categorie and not args.personnalize:
     print(f"[!] Merci de bien vouloir utiliser une option")
     print("""
 usage: main.py [-h] [-s SEARCH] [-t TAG] [-i INSTALL] [-l LIST] [-u USE]
@@ -147,7 +147,15 @@ optional arguments:
 # ================================================ OPTIONS ================================================ #
 
 # ================ PERSONNALIZE ================ #
-
+if args.personnalize:
+        print(f"[+] personnalisation de {repo_path}/lists.ini")
+        for section in sect:
+                if args.personnalize.lower() == section.lower():
+                        print(f"edite du tool {args.personnalize}")
+                        #Config.set
+                else:
+                        print(f"creation du tool {args.personnalize}")
+                        
 # ================ PERSONNALIZE ================ #
 
 

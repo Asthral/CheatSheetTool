@@ -166,8 +166,9 @@ if args.personnalize:
         if tool_found:
             print(f"[+] {section}\n {tool_description}")
             print(f"[+] edite du tool {args.personnalize}")
-            #Config.set
-            #input
+            modif = input("> ")
+            if modif == "name":
+                ok = Config.set(section, "name")
         else:
             print(f"[!] tool {args.personalize} non trouvé")
             create_tool = input("voulez vous creer un nouveau tool ? (y/N)")

@@ -219,8 +219,10 @@ if args.use:
             if os.path.exists(tool_path):
                 print(f"[+] Exec de {tool_name}...")
                 os.chdir(tool_path)
-                print(tool_exec)
-                subprocess.run(tool_exec, shell=True)
+                while tool_found:
+                    using_tool = input(f"{args.use} > ")
+                    subprocess.run((tool_exec + using_tool), shell=True)
+                
             else:
                 print(f"[-] Chemin introuvable")
                 install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
@@ -229,8 +231,10 @@ if args.use:
         else:
             print(f"[+] Tool {tool_name} selectionné")
             print(f"[+] Exec de {tool_name}...")
-            print(tool_exec)
-            subprocess.run(tool_exec, shell=True)
+            while tool_found:
+                using_tool = input(f"{args.use} > ")
+                subprocess.run((tool_exec + using_tool), shell=True)
+                
     else:
         print(f"[-] Tool {args.use} non trouvé")
         print(f"[-] Suggestion :")

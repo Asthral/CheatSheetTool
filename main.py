@@ -38,7 +38,14 @@ Exit_paylaod = base64.b64decode(Exit_base64).decode()
 #==============PAYLOAD==============#
 
 #=========================LIST=========================#
-
+categorie = ["Crypto",
+        "Forensic",
+        "Network",
+        "Osint",
+        "Pwn",
+        "Reverse",
+        "Stegano",
+        "Web"]
         
 # =================== FUNCTION =================== #
 #fonction by chatgpt
@@ -170,15 +177,7 @@ if args.categorie:
                         tool_found = True
         if not tool_found:
                 print("[-] Aucun tool trouvé")
-                print("""[-] Categorie à choisir :
-                        [1] Crypto
-                        [2] Forensic
-                        [3] Network
-                        [4] Osint
-                        [5] Pwn
-                        [6] Reverse
-                        [7] Stegano
-                        [8] Web""")
+                print("[-] Categorie à choisir :\n" + for idx, i in range (enumerate(catgeorie), categorie): print(f"[{idx}] {categorie}"))
 # ================ CATEGORIE ================ #
 
 

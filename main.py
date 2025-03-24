@@ -121,6 +121,7 @@ config_file = path("lists.ini")
 Config = configparser.ConfigParser()
 Config.read(config_file)
 sect = Config.sections()
+rawconfig = configparser.RawConfigParser()
 # =================== DATA CONF =================== #
 
 # ================== INIT VARIABLE ================== #
@@ -168,12 +169,13 @@ if args.personnalize:
             print(f"[+] edite du tool {args.personnalize}")
             modif = input("> ")
             if modif == "name":
-                ok = Config.set(section, "name")
+                rawconfig.set(section, "name", modif)
         else:
             print(f"[!] tool {args.personalize} non trouvé")
             create_tool = input("voulez vous creer un nouveau tool ? (y/N)")
             if create_tool == ["o", "y"].lower():
                 print(f"[+] creation du tool {args.personnalize}")
+                rawconfig.add_section(args.personnalize)
             else:
                 print(f"[!] Exit de la personalisation")
                 

@@ -170,6 +170,15 @@ if args.categorie:
                         tool_found = True
         if not tool_found:
                 print("[-] Aucun tool trouvé")
+                print("""[-] Categorie à choisir :
+                        [1] Crypto
+                        [2] Forensic
+                        [3] Network
+                        [4] Osint
+                        [5] Pwn
+                        [6] Reverse
+                        [7] Stegano
+                        [8] Web""")
 # ================ CATEGORIE ================ #
 
 

@@ -133,10 +133,11 @@ if os.path.exists(f"{repo_path}/lists.ini"):
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
-if not args.list and not args.install and not args.tag and not args.search and not args.use and not args.categorie and not args.personnalize:
+if not args.list and not args.install and not args.search and not args.use and not args.categorie and not args.personnalize: #and not args.tag
     print(f"[!] Merci de bien vouloir utiliser une option")
     print("""
-usage: main.py [-h] [-s SEARCH] [-t TAG] [-i INSTALL] [-l LIST] [-u USE]
+usage: main.py [-h] [-s SEARCH] [-i INSTALL] [-l LIST] [-u USE] [-c CATEGORIE]
+               [-p PERSONNALIZE]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -146,6 +147,11 @@ optional arguments:
                         Install the tool
   -l LIST, --list LIST  List all tools
   -u USE, --use USE     Use the selected tool
+  -c CATEGORIE, --categorie CATEGORIE
+                        Option used for list tool by categorie
+  -p PERSONNALIZE, --personalize PERSONNALIZE
+                        create and personnalize a tool, or modify a tool
+                        existing in lists.ini
 """)
 
 
@@ -170,14 +176,15 @@ if args.personnalize:
 # ================ CATEGORIE ================ #
 if args.categorie:
         print(f"[+] List de la categorie : {args.categorie}\n")
-        tool_found = False
+        categorie_found = False
         for section in sect:
-                if args.categorie.lower() == tool_categorie:
-                        print(f"[+] {section}\n {tool_description}")
-                        tool_found = True
-        if not tool_found:
-                print("[-] Aucun tool trouvé")
-                print("[-] Categorie à choisir :\n" + for idx, i in range (enumerate(catgeorie), categorie): print(f"[{idx}] {categorie}"))
+            data(section)
+            if args.categorie.lower() == tool_categorie.lower():
+                print(f"[+] {section}\n {tool_description}")
+                categorie_found = True
+        if not categorie_found:
+                print("[-] Aucune catégorie trouvée")
+                for i in range (len(categorie)): print(f"[{i}] {categorie[i]}")
 # ================ CATEGORIE ================ #
 
 

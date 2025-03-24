@@ -86,7 +86,7 @@ def data(tool):
             tool_name = Config.get(section, "name")
             tool_path = Config.get(section, "path", fallback=None)
             exec_cmd = Config.get(section, "exec")
-#            tool_tag = Config.get(section, "tag")
+#           tool_tag = Config.get(section, "tag")
             tool_install = Config.get(section, "install")
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")

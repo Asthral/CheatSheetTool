@@ -78,7 +78,7 @@ def path(file):
     return os.path.join(repo_path, file)
 
 def data(tool):
-    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, tool_tag
+    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, tool_tag, section, sect
     tool_found = False
     for section in sect:
         if tool == section:
@@ -164,10 +164,17 @@ if args.personnalize:
         print(f"[+] personnalisation de {repo_path}/lists.ini")
         data(args.personnalize)
         if tool_found:
-                print(f"edite du tool {args.personnalize}")
-                #Config.set
+            print(f"[+] {section}\n {tool_description}")
+            print(f"[+] edite du tool {args.personnalize}")
+            #Config.set
+            #input
         else:
-                print(f"creation du tool {args.personnalize}")
+            print(f"[!] tool {args.personalize} non trouvé")
+            create_tool = input("voulez vous creer un nouveau tool ? (y/N)")
+            if create_tool == ["o", "y"].lower():
+                print(f"[+] creation du tool {args.personnalize}")
+            else:
+                print(f"[!] Exit de la personalisation")
                 
                         
 # ================ PERSONNALIZE ================ #

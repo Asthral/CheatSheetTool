@@ -81,7 +81,7 @@ def data(tool):
     global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, tool_tag, section, sect
     tool_found = False
     for section in sect:
-        if tool == section:
+        if tool.lower() == section.lower():
             tool_found = True
             tool_name = Config.get(section, "name")
             tool_path = Config.get(section, "path", fallback=None)
@@ -92,7 +92,7 @@ def data(tool):
             tool_description = Config.get(section, "description")
             if tool_path:
                 tool_path = path(tool_path)
-                tool_exec = tool_path + '/' + exec_cmd
+                tool_exec = tool_path + exec_cmd
             else:
                 tool_exec = exec_cmd
             return
@@ -171,11 +171,12 @@ if args.personnalize:
             if modif == "name":
                 rawconfig.set(section, "name", modif)
         else:
-            print(f"[!] tool {args.personalize} non trouvé")
+            print(f"[!] tool {args.personnalize} non trouvé")
             create_tool = input("voulez vous creer un nouveau tool ? (y/N)")
-            if create_tool == ["o", "y"].lower():
+            if create_tool.lower() in ["o", "y"]:
                 print(f"[+] creation du tool {args.personnalize}")
                 rawconfig.add_section(args.personnalize)
+                #finish that
             else:
                 print(f"[!] Exit de la personalisation")
                 
@@ -221,10 +222,13 @@ if args.use:
             if os.path.exists(tool_path):
                 print(f"[+] Exec de {tool_name}...")
                 os.chdir(tool_path)
-                while tool_found:
+                back = 0
+                while back == 0:
                     using_tool = input(f"{args.use} > ")
                     subprocess.run((tool_exec + using_tool), shell=True)
-                
+                    if using_tool in ["back", "exit"]:
+                        back = 1
+
             else:
                 print(f"[-] Chemin introuvable")
                 install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
@@ -260,7 +264,7 @@ if args.install:
             if install.lower() in ["o", "y"]:
                 print(f"[+] Installation de {tool_name}...")
                 print(f"[+] Execution de {tool_install}...")
-                subprocess.run("cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
+                subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
                 replace = input(f"[-] Veux-tu remplacer {bin_path} ? (y/N) ")
                 if replace.lower() in ["o", "y"]:
                     print(f"[+] Remplacement de {bin_path}...")

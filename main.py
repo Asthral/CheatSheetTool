@@ -225,9 +225,11 @@ if args.use:
                 back = 0
                 while back == 0:
                     using_tool = input(f"{args.use} > ")
-                    subprocess.run((tool_exec + using_tool), shell=True)
                     if using_tool in ["back", "exit"]:
                         back = 1
+                    else:
+                        subprocess.run((tool_exec + using_tool), shell=True)
+                    
 
             else:
                 print(f"[-] Chemin introuvable")

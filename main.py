@@ -74,14 +74,17 @@ def detect_and_install(package):
 
 def detect_os():
     system = platform.system()
+    print(f"[+] votre OS est {system}")
     if system == "linux".lower():
-        print("ok linux")
+        print("ok")
     if system == "windows".lower():
-        print("okok windows")
+        print(f"[-] le tool ne fonctionne pas sur {system}")
+        exit()
     if system == "Darwin".lower():
-        print("ouai darwin")
+        print(f"[-] le tool ne fonctionne pas sur {system}")
+        exit()
     else:
-        print("os non reconnu")
+        print("[!] Votre OS n'est pas reconnu")
     return system
 
 def path(file):

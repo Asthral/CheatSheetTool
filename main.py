@@ -165,7 +165,7 @@ if args.personnalize:
         print(f"[+] personnalisation de {repo_path}/lists.ini")
         data(args.personnalize)
         if tool_found:
-            print(f"[+] {section}\n {tool_description}")
+            print(f"[+] {section}\n\t description : {tool_description}")
             print(f"[+] edite du tool {args.personnalize}")
             modif = input("> ")
             if modif == "name":
@@ -249,7 +249,8 @@ if args.use:
         tool_found = False
         for section in sect:
             if args.use.lower() in section.lower():
-                print(f"[+] {section}\ndescription : {tool_description}")
+                data(section)
+                print(f"[+] {section}\n\tdescription : {tool_description}")
                 tool_found = True
 # ================ USE ================ #
 
@@ -290,7 +291,7 @@ if args.install:
 if args.list:
     print(f"[+] Liste de {args.list} :")
     for section in sect:
-        print(f"[+] {section}\ndescription : {tool_description}")
+        print(f"[+] {section}\n\tdescription : {tool_description}")
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #

@@ -6,11 +6,10 @@ import socket
 import re
 import time
 import os
-import readline
+#import readline
 import platform
 import subprocess
 import sys
-# hihi
 
 #==============PAYLOAD==============#
 Main_base64 = "X19fX18vXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXy9cXFxcXFxfX19fICAgICAgICAKIF9fXy9cXFxcXFxcXFxcXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX1wvLy8vXFxcX19fXyAgICAgICAKICBfXy9cXFwvLy8vLy8vLy9cXFxfX19fX19fX19fX19fX19fX18vXFxcX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19cL1xcXF9fX18gICAgICAKICAgX1wvXFxcX19fX19fX1wvXFxcX18vXFxcXFxcXFxcXF9fL1xcXFxcXFxcXFxcX18vXFwvXFxcXFxcXF9fXy9cXFxcXFxcXFxfX19fX19fXC9cXFxfX19fICAgICAKICAgIF9cL1xcXFxcXFxcXFxcXFxcXF9cL1xcXC8vLy8vL19fXC8vLy9cXFwvLy8vX19cL1xcXC8vLy8vXFxcX1wvLy8vLy8vL1xcXF9fX19fX1wvXFxcX19fXyAgICAKICAgICBfXC9cXFwvLy8vLy8vLy9cXFxfXC9cXFxcXFxcXFxcX19fX1wvXFxcX19fX19fXC9cXFxfX19cLy8vX19fXy9cXFxcXFxcXFxcX19fX19cL1xcXF9fX18gICAKICAgICAgX1wvXFxcX19fX19fX1wvXFxcX1wvLy8vLy8vL1xcXF9fX19cL1xcXF8vXFxfX1wvXFxcX19fX19fX19fXy9cXFwvLy8vL1xcXF9fX19fXC9cXFxfX19fICAKICAgICAgIF9cL1xcXF9fX19fX19cL1xcXF9fL1xcXFxcXFxcXFxfX19fXC8vXFxcXFxfX19cL1xcXF9fX19fX19fX1wvL1xcXFxcXFxcL1xcX18vXFxcXFxcXFxcXyAKICAgICAgICBfXC8vL19fX19fX19fXC8vL19fXC8vLy8vLy8vLy9fX19fX19cLy8vLy9fX19fXC8vL19fX19fX19fX19fXC8vLy8vLy8vXC8vX19cLy8vLy8vLy8vX18="
@@ -78,7 +77,7 @@ def path(file):
     return os.path.join(repo_path, file)
 
 def data(tool):
-    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, tool_tag, section, sect
+    global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, section, sect # tool_tag
     tool_found = False
     for section in sect:
         if tool.lower() == section.lower():
@@ -96,6 +95,20 @@ def data(tool):
             else:
                 tool_exec = exec_cmd
             return
+
+def exec_tool():
+    print(f"[+] Tool {tool_name} selectionné")
+    print(f"[+] Chemin du tool : {tool_path}")        
+    if os.path.exists(tool_path):
+        print(f"[+] Exec de {tool_name}...")
+        os.chdir(tool_path)
+        back = 0
+        while back == 0:
+            using_tool = input(f"{args.use} > ")
+            if using_tool in ["back", "exit"]:
+                back = 1
+            else:
+                subprocess.run((tool_exec + using_tool), shell=True)
 # =================== FUNCTION =================== #
 
 
@@ -167,9 +180,8 @@ if args.personnalize:
         if tool_found:
             print(f"[+] {section}\n\t description : {tool_description}")
             print(f"[+] edite du tool {args.personnalize}")
-            modif = input("> ")
-            if modif == "name":
-                rawconfig.set(section, "name", modif)
+            modif = input(f" ({args.personnalize}) > ")
+            rawconfig.set(section, "name", modif)
         else:
             print(f"[!] tool {args.personnalize} non trouvé")
             create_tool = input("voulez vous creer un nouveau tool ? (y/N)")
@@ -202,14 +214,16 @@ if args.categorie:
 # ================ SEARCH ================ #
 if args.search:
     print(f"[+] Recherche de : {args.search}\n")
-    tool_found = False
     for section in sect:
         if args.search.lower() in section.lower():
+            data(section)
             print(f"[+] {section}\n {tool_description}")
             tool_found = True
     if not tool_found:
         print("[-] Aucun tool trouvé")
+
 # ================ SEARCH ================ #
+
 
 # ================ USE ================ #
 if args.use:
@@ -221,7 +235,8 @@ if args.use:
             print(f"[+] Chemin du tool : {tool_path}")        
             if os.path.exists(tool_path):
                 print(f"[+] Exec de {tool_name}...")
-                os.chdir(tool_path)
+                test = os.chdir(tool_path)
+                print(test)
                 back = 0
                 while back == 0:
                     using_tool = input(f"{args.use} > ")
@@ -230,7 +245,6 @@ if args.use:
                     else:
                         subprocess.run((tool_exec + using_tool), shell=True)
                     
-
             else:
                 print(f"[-] Chemin introuvable")
                 install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")
@@ -240,18 +254,18 @@ if args.use:
             print(f"[+] Tool {tool_name} selectionné")
             print(f"[+] Exec de {tool_name}...")
             while tool_found:
-                using_tool = input(f"{args.use} > ")
+                using_tool = input(f"({args.use}) > {tool_exec} ")
                 subprocess.run((tool_exec + using_tool), shell=True)
                 
     else:
         print(f"[-] Tool {args.use} non trouvé")
-        print(f"[-] Suggestion :")
-        tool_found = False
+        print(f"[-] Suggestion possible :")
         for section in sect:
             if args.use.lower() in section.lower():
                 data(section)
                 print(f"[+] {section}\n\tdescription : {tool_description}")
-                tool_found = True
+        if not tool_found:
+            print(f"[-] Pas de suggestion")
 # ================ USE ================ #
 
 # ================ INSTALL ================ #

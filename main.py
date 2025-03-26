@@ -6,7 +6,7 @@ import socket
 import re
 import time
 import os
-#import readline
+import readline
 import platform
 import subprocess
 import sys
@@ -80,6 +80,8 @@ def detect_os():
         print("okok windows")
     if system == "Darwin".lower():
         print("ouai darwin")
+    else:
+        print("os non reconnu")
     return system
 
 def path(file):

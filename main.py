@@ -71,6 +71,16 @@ def detect_and_install(package):
         print("Système d'exploitation non reconnu.")
         sys.exit(1)
 
+def detect_os():
+    system = platform.system()
+    if system == "linux".lower():
+        print("ok linux")
+    if system == "windows".lower():
+        print("okok windows")
+    if system == "Darwin".lower():
+        print("ouai darwin")
+    return system
+
 def path(file):
     global repo_path
     repo_path = os.path.dirname(os.path.abspath(__file__))
@@ -146,6 +156,8 @@ if os.path.exists(f"{repo_path}/lists.ini"):
     print(f"[+] Chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
+
+detect_os()
 
 if not args.list and not args.install and not args.search and not args.use and not args.categorie and not args.personnalize: #and not args.tag
     print(f"[!] Merci de bien vouloir utiliser une option")

@@ -45,7 +45,8 @@ categorie = ["Crypto",
         "Reverse",
         "Stegano",
         "Web"]
-        
+#=========================LIST=========================#
+
 # =================== FUNCTION =================== #
 #fonction by chatgpt
 def detect_and_install(package):

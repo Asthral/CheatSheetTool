@@ -5,7 +5,7 @@ import base64
 import socket
 import re
 import time
-import os
+from os import path, chdir
 import readline
 import platform
 import subprocess
@@ -48,30 +48,6 @@ categorie = ["Crypto",
 # ========================= LIST ========================= #
 
 # =================== FUNCTION =================== #
-#fonction by chatgpt
-def detect_and_install(package):
-    system = platform.system()
-    
-    if system == "Linux":
-        try:
-            cmd = "sudo apt install -y" + package
-            subprocess.run(cmd, check=True)
-        except Exception as e:
-            print(f"[!] Erreur lors de l'installation : {e}")
-            sys.exit(1)
-    
-    elif system == "Windows":
-        print("[!] Ce programme ne supporte pas Windows. Fermeture.")
-        sys.exit(1)
-    
-    elif system == "Darwin":
-        print("[!] Ce programme ne supporte pas macOS. Fermeture.")
-        sys.exit(1)
-    
-    else:
-        print("Système d'exploitation non reconnu.")
-        sys.exit(1)
-
 def detect_os():
     system = platform.system()
     if system == "Linux":
@@ -90,10 +66,10 @@ def detect_os():
         exit()
     return system
 
-def path(file):
+def absolut_path(file):
     global repo_path
-    repo_path = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(repo_path, file)
+    repo_path = path.dirname(path.abspath(__file__))
+    return path.join(repo_path, file)
 
 def data(tool):
     global tool_found, tool_install, tool_name, tool_categorie, tool_description, tool_path, tool_exec, section, sect # tool_tag
@@ -109,7 +85,7 @@ def data(tool):
             tool_categorie = Config.get(section, "categorie")
             tool_description = Config.get(section, "description")
             if tool_path:
-                tool_path = path(tool_path)
+                tool_path = absolut_path(tool_path)
                 tool_exec = tool_path + exec_cmd
             else:
                 tool_exec = exec_cmd
@@ -119,11 +95,9 @@ def exec_tool():
     print(f"[+] Tool {tool_name} selectionné")
     print(f"[+] Chemin du tool : {tool_path}")
     print(f"[+] Exec de {tool_name}...")
-    test = os.chdir(tool_path)
-    print(test)
     back = 0
     while back == 0:
-        using_tool = input(f"({args.use}) > {tool_exec} ")
+        using_tool = input(f"({args.use}) > {tool_exec}")
         if using_tool in ["back", "exit"]:
             back = 1
         else:
@@ -149,7 +123,7 @@ args = parser.parse_args()
 # =================== ARGS CONF =================== #
 
 # =================== DATA CONF =================== #
-config_file = path("lists.ini")
+config_file = absolut_path("lists.ini")
 Config = configparser.ConfigParser()
 Config.read(config_file)
 sect = Config.sections()
@@ -161,7 +135,7 @@ tool_found = False
 # ================== INIT VARIABLE ================== #
 
 print(f"[+] Initialisation du path {repo_path}...")
-if os.path.exists(f"{repo_path}/lists.ini"):
+if path.exists(f"{repo_path}/lists.ini"):
     print(f"[+] Chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
@@ -253,7 +227,8 @@ if args.use:
 
     if tool_found:
         if tool_path:
-            if os.path.exists(tool_path):
+            if path.exists(tool_path):
+                chdir(tool_path)
                 okay = exec_tool()
                     
             else:
@@ -283,7 +258,7 @@ if args.install:
     if tool_found:
         bin_path = f"/usr/bin/{tool_name}"
         
-        if os.path.exists(bin_path):
+        if path.exists(bin_path):
             print(f"[!] {tool_name} est déjà installé à {bin_path}")
             install = input("[?] Voulez-vous vraiment l'installer ? (y/N) ")
             if install.lower() in ["o", "y"]:

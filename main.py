@@ -196,7 +196,6 @@ if args.categorie:
         print(f"[+] List de la categorie : {args.categorie}\n")
         categorie_found = False
         for section in sect:
-            print(section)
             data(section)
             if args.categorie.lower() == tool_categorie.lower():
                 print(f"[+] {section}\n {tool_description}")
@@ -217,7 +216,6 @@ if args.search:
             tool_found = True
     if not tool_found:
         print("[-] Aucun tool trouvé")
-
 # ================ SEARCH ================ #
 
 

@@ -79,12 +79,16 @@ def detect_os():
         print("ok")
     if system == "windows".lower():
         print(f"[-] le tool ne fonctionne pas sur {system}")
+        print(Exit_payload)
         exit()
     if system == "Darwin".lower():
         print(f"[-] le tool ne fonctionne pas sur {system}")
+        print(Exit_payload)
         exit()
     else:
         print("[!] Votre OS n'est pas reconnu")
+        print(Exit_payload)
+        exit()
     return system
 
 def path(file):
@@ -129,7 +133,7 @@ def exec_tool():
 
 
 # ========= MAIN ========= #
-print(f"{Main_payload}\n")
+print(Main_payload)
 # ========= MAIN ========= #
 
 

@@ -77,11 +77,11 @@ def detect_os():
     print(f"[+] votre OS est {system}")
     if system == "linux".lower():
         print("ok")
-    if system == "windows".lower():
+    elif system == "windows".lower():
         print(f"[-] le tool ne fonctionne pas sur {system}")
         print(Exit_payload)
         exit()
-    if system == "Darwin".lower():
+    elif system == "Darwin".lower():
         print(f"[-] le tool ne fonctionne pas sur {system}")
         print(Exit_payload)
         exit()
@@ -167,7 +167,7 @@ if os.path.exists(f"{repo_path}/lists.ini"):
 else:
     print(f"[!] Erreur du chargement du fichier d'initialisation des tools {repo_path}/lists.ini...")
 
-detect_os()
+os = detect_os()
 
 if not args.list and not args.install and not args.search and not args.use and not args.categorie and not args.personnalize: #and not args.tag
     print(f"[!] Merci de bien vouloir utiliser une option")
@@ -209,7 +209,7 @@ if args.personnalize:
             create_tool = input("voulez vous creer un nouveau tool ? (y/N)")
             if create_tool.lower() in ["o", "y"]:
                 print(f"[+] creation du tool {args.personnalize}")
-                rawconfig.add_section(args.personnalize)
+                #rawconfig.add_section(args.personnalize)
                 #finish that
             else:
                 print(f"[!] Exit de la personalisation")

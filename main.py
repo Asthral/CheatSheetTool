@@ -93,7 +93,10 @@ def data(tool):
 
 def exec_tool():
     print(f"[+] Tool {tool_name} selectionné")
-    print(f"[+] Chemin du tool : {tool_path}")
+    if tool_path != "":
+        print(f"[+] Chemin du tool : {tool_path}")
+    else:
+        print(f"[+] Chemin du tool : {tool_exec}")
     print(f"[+] Exec de {tool_name}...")
     back = 0
     while back == 0:

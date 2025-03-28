@@ -100,6 +100,7 @@ def exec_tool():
         using_tool = input(f"({args.use}) > {tool_exec}")
         if using_tool in ["back", "exit"]:
             back = 1
+            print(Exit_payload)
         else:
             subprocess.run((tool_exec + using_tool), shell=True)
 # ================================= FUNCTION ================================= #
@@ -227,7 +228,7 @@ if args.use:
         if tool_path:
             if path.exists(tool_path):
                 chdir(tool_path)
-                okay = exec_tool()
+                exec_tool()
                     
             else:
                 print(f"[-] Chemin introuvable")
@@ -235,8 +236,7 @@ if args.use:
                 if install.lower() in ["o", "y"]:
                     args.install = args.use
         else:
-            okay = exec_tool()
-                
+            exec_tool()
     else:
         print(f"[-] Tool {args.use} non trouvé")
         print(f"[-] Suggestion possible :")

@@ -106,6 +106,18 @@ def exec_tool():
             print(Exit_payload)
         else:
             subprocess.run((tool_exec + using_tool), shell=True)
+
+def install_tool():
+    print(f"[+] Installation de {tool_name}...")
+    print(f"[+] Execution de {tool_install}...")
+    subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
+    if not path.exists(bin_path):
+        replace = input(f"[-] Veux-tu ajouter {bin_path} ? (y/N) ")
+        if replace.lower() in ["o", "y"]:
+            print(f"[+] ajout de {bin_path}...")
+            replace_bin = f"ln -sfv {tool_exec} $HOME/.local/bin/{tool_name}"
+            subprocess.run(replace_bin, shell=True)
+            print(f"[+] Fin de l'installation de {tool_name}")
 # ================================= FUNCTION ================================= #
 # ================================= FUNCTION ================================= #
 # ================================= FUNCTION ================================= #
@@ -262,23 +274,13 @@ if args.install:
             print(f"[!] {tool_name} est déjà installé à {bin_path}")
             install = input("[?] Voulez-vous vraiment l'installer ? (y/N) ")
             if install.lower() in ["o", "y"]:
-                print(f"[+] Installation de {tool_name}...")
-                print(f"[+] Execution de {tool_install}...")
-                subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
-                replace = input(f"[-] Veux-tu remplacer {bin_path} ? (y/N) ")
-                if replace.lower() in ["o", "y"]:
-                    print(f"[+] Remplacement de {bin_path}...")
-                    replace_bin = f"sudo ln -sfv {tool_exec} /usr/bin/{tool_name}"
-                    subprocess.run(replace_bin, shell=True)
-                    print(f"[+] Fin de l'installation de {tool_name}")
+                install_tool()
             else:
                 print(f"[+] Annulation de l'installation de {tool_name}")
                 print(f"[+] Tool déjà existant à {bin_path}")
                 #subprocess.run(tool_name, shell=True)
         else:
-            print(f"[+] Installation de {tool_name}...")
-            print(f"[+] Execution de {tool_install}...")
-            subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
+            install_tool()
         
     else:
         print(f"[-] Tool {args.install} pas trouvé")

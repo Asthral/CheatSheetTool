@@ -232,7 +232,6 @@ if args.use:
             if path.exists(tool_path):
                 chdir(tool_path)
                 exec_tool()
-                    
             else:
                 print(f"[-] Chemin introuvable")
                 install = input(f"[-] Veux-tu installer {tool_name} ? (y/N) ")

@@ -136,7 +136,7 @@ parser.add_argument('-i', '--install', dest='install', default=None, help='Insta
 parser.add_argument('-l', '--list', dest='list', default=None, help='List all tools')
 parser.add_argument('-u', '--use', dest='use', default=None, help='Use the selected tool')
 parser.add_argument('-c', '--categorie', dest='categorie', default=None, help='Option used for list tool by categorie')
-parser.add_argument('-p', '--personalize', dest='personnalize', default=None, help='create and personnalize a tool, or modify a tool existing in lists.ini')
+parser.add_argument('-p', '--personalize', dest='personnalize', required=False, help='create and personnalize a tool, or modify a tool existing in lists.ini')
 args = parser.parse_args()
 # =================== ARGS CONF =================== #
 
@@ -290,6 +290,7 @@ if args.install:
 if args.list:
     print(f"[+] Liste de {args.list} :")
     for section in sect:
+        data(section)
         print(f"[+] {section}\n\tdescription : {tool_description}")
 # ================ LIST FUNCTION ================ #
 

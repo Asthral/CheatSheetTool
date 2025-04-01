@@ -193,6 +193,7 @@ if args.personnalize:
             print(f"[+] {section}\n\t description : {tool_description}")
             print(f"[+] edite du tool {args.personnalize}")
             modif = input(f" ({args.personnalize}) > ")
+            parser.set('test', 'value', '15')
             rawconfig.set(section, "name", modif)
         else:
             print(f"[!] tool {args.personnalize} non trouvé")

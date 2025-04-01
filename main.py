@@ -109,10 +109,10 @@ def exec_tool():
 
 def install_tool():
     print(f"[+] Installation de {tool_name}...")
-    print(f"[+] Execution de {tool_install}...")
+    print(f"[+] Execution de cd {repo_path}/tools/{tool_categorie} && {tool_install}...")
     subprocess.run(f"cd {repo_path}/tools/{tool_categorie} && {tool_install}", shell=True)
     if not path.exists(bin_path):
-        replace = input(f"[-] Veux-tu ajouter {bin_path} ? (y/N) ")
+        replace = input(f"[-] Veux-tu ajouter $HOME/.local/bin/{tool_name} ? (y/N) ")
         if replace.lower() in ["o", "y"]:
             print(f"[+] ajout de {bin_path}...")
             replace_bin = f"ln -sfv {tool_exec} $HOME/.local/bin/{tool_name}"

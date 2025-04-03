@@ -133,6 +133,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--search', dest='search', default=None, help="Search tool by name")
 #parser.add_argument('-t', '--tag', dest='tag', default=None, help="Search tool by tag")
 parser.add_argument('-i', '--install', dest='install', default=None, help='Install the tool')
+parser.add_argument('-r', '--remove', dest='remive', default=None, help='option pour supprimer un tool installé')
 parser.add_argument('-l', '--list', dest='list', default=None, help='List all tools')
 parser.add_argument('-u', '--use', dest='use', default=None, help='Use the selected tool')
 parser.add_argument('-c', '--categorie', dest='categorie', default=None, help='Option used for list tool by categorie')
@@ -286,6 +287,18 @@ if args.install:
     else:
         print(f"[-] Tool {args.install} pas trouvé")
 # ================ INSTALL ================ #
+
+
+# ================ REMOVE ================ #
+if args.remove:
+  data(args.remove)
+  if tool_found:
+    print(f"suppression de {args.remove}")
+    commande = "rm -rf {tool_path}"
+    print(f"Execution de la commande {commande}")
+    subprocess.run(commande, shell=True)
+# ================ REMOVE ================ #
+
 
 # ================ LIST ================ #
 if args.list:

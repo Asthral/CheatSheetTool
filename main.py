@@ -118,6 +118,16 @@ def install_tool():
             replace_bin = f"ln -sfv {tool_exec} $HOME/.local/bin/{tool_name}"
             subprocess.run(replace_bin, shell=True)
             print(f"[+] Fin de l'installation de {tool_name}")
+
+def suggestion():
+    print(f"[-] Tool {args.use} non trouvé")
+    print(f"[-] Suggestion possible :")
+    for section in sect:
+        if args.use.lower() in section.lower():
+            data(section)
+            print(f"[+] {section}\n\tdescription : {tool_description}")
+        if not tool_found:
+            print(f"[-] Pas de suggestion")
 # ================================= FUNCTION ================================= #
 # ================================= FUNCTION ================================= #
 # ================================= FUNCTION ================================= #
@@ -233,7 +243,7 @@ if args.search:
             print(f"[+] {section}\n {tool_description}")
             tool_found = True
     if not tool_found:
-        print("[-] Aucun tool trouvé")
+      suggestion()
 # ================ SEARCH ================ #
 
 
@@ -254,14 +264,7 @@ if args.use:
         else:
             exec_tool()
     else:
-        print(f"[-] Tool {args.use} non trouvé")
-        print(f"[-] Suggestion possible :")
-        for section in sect:
-            if args.use.lower() in section.lower():
-                data(section)
-                print(f"[+] {section}\n\tdescription : {tool_description}")
-        if not tool_found:
-            print(f"[-] Pas de suggestion")
+      suggestion()
 # ================ USE ================ #
 
 
@@ -282,10 +285,10 @@ if args.install:
                 print(f"[+] Tool déjà existant à {bin_path}")
                 #subprocess.run(tool_name, shell=True)
         else:
-            install_tool()
+          install_tool()
         
     else:
-        print(f"[-] Tool {args.install} pas trouvé")
+      suggestion()
 # ================ INSTALL ================ #
 
 
@@ -297,15 +300,21 @@ if args.remove:
     commande = "rm -rf {tool_path}"
     print(f"Execution de la commande {commande}")
     subprocess.run(commande, shell=True)
+  else:
+    suggestion()
 # ================ REMOVE ================ #
 
 
 # ================ LIST ================ #
 if args.list:
+  if tool_found:
     print(f"[+] Liste de {args.list} :")
     for section in sect:
         data(section)
         print(f"[+] {section}\n\tdescription : {tool_description}")
+  else:
+    suggestion()
+    
 # ================ LIST FUNCTION ================ #
 
 # ================ TAG FUNCTION ================ #
